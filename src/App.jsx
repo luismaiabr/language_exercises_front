@@ -10,6 +10,8 @@ import {
   EmptyLessonsScreen,
 } from './components/StateScreens.jsx';
 
+const API_BASE = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/+$/, '') : '';
+
 export default function App() {
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState(null);
@@ -71,7 +73,7 @@ export default function App() {
   const fetchLessonByToken = async (currentToken) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/lesson/${currentToken}`);
+      const res = await fetch(`${API_BASE}/api/lesson/${currentToken}`);
       if (res.status === 410) {
         setAppState('expired');
         return;
@@ -114,7 +116,7 @@ export default function App() {
   const fetchLessonByEmail = async (currentEmail) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/user/${encodeURIComponent(currentEmail)}/latest-lesson`);
+      const res = await fetch(`${API_BASE}/api/user/${encodeURIComponent(currentEmail)}/latest-lesson`);
       if (!res.ok) {
         throw new Error(`Fehler beim Abrufen (${res.status})`);
       }
@@ -232,7 +234,7 @@ export default function App() {
       }
 
       // Try persisting answer to backend
-      fetch('/api/answers/record', {
+      fetch(`${API_BASE}/api/answers/record`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/+$/, '') : '';
+
 export default function WrittenExerciseCard({ exercise, index, token, onAnswerEvaluated }) {
   const [answer, setAnswer] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ export default function WrittenExerciseCard({ exercise, index, token, onAnswerEv
     setError(null);
 
     try {
-      const response = await fetch('/api/exercises/evaluate-written', {
+      const response = await fetch(`${API_BASE}/api/exercises/evaluate-written`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
