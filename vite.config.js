@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       cors: {
-        origin: allowedOrigins,
+        origin: [...allowedOrigins, /\.vercel\.app$/],
         credentials: true,
       },
       proxy: {
@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 5173,
       cors: {
-        origin: allowedOrigins,
+        origin: [...allowedOrigins, /\.vercel\.app$/],
         credentials: true,
       },
     },
